@@ -33,10 +33,6 @@ app.use("/api/v1", cartRoutes);
 app.use("/api/v1", orderRoutes);
 app.use("/api/v1", statsRoutes);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
-});
-
 // 404 Handler
 app.use((req, res) => {
     res.status(404).json({ message: "Route not found" });
