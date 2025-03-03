@@ -93,7 +93,7 @@ exports.deleteBook = async (req, res) => {
 exports.getRecentBooks = async (req, res) => {
   try {
     // Use a simpler query without sorting by createdAt
-    const recentBooks = await Book.find().sort({ createdAt: -1 }).limit(5);
+    const recentBooks = await Book.find().sort({ createdAt: -1 }).limit(10);
     
     console.log("Recent books found:", recentBooks.length);
     
