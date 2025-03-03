@@ -1,4 +1,4 @@
-const Book = require("../models/Book");
+const Book = require("../models/book");
 
 exports.addBook = async (req, res) => {
   try {
@@ -86,5 +86,27 @@ exports.deleteBook = async (req, res) => {
     res.status(200).json({ message: "Book deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting book", error: error.message });
+  }
+};
+
+// Get recent books
+exports.getRecentBooks = async (req, res) => {
+  try {
+    // Use a simpler query without sorting by createdAt
+    const recentBooks = await Book.find().limit(6);
+    
+    console.log("Recent books found:", recentBooks.length);
+    
+    res.status(200).json({
+      status: "Success",
+      data: recentBooks
+    });
+  } catch (error) {
+    console.error("Error in getRecentBooks:", error);
+    res.status(500).json({ 
+      status: "Error", 
+      message: "Error fetching recent books", 
+      error: error.message 
+    });
   }
 };

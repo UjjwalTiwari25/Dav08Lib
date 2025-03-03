@@ -2,6 +2,7 @@
 const router = require("express").Router();
 const User = require("../models/user");
 const Book = require("../models/book");
+const bookController = require("../controllers/bookController");
 
 const { authenticateToken } = require("../middleware/auth"); // Note the path change
 
@@ -210,21 +211,7 @@ router.get("/get-books-count", authenticateToken, async (req, res) => {
 });
 
 // Get recently added books (limit 4)
-router.get("/get-recent-books", async (req, res) => {
-    try {
-        const books = await Book.find().sort({ createdAt: -1 }).limit(4);
-        return res.status(200).json({
-            status: "Success",
-            data: books,
-        });
-    } catch (error) {
-        res.status(500).json({ 
-            status: "Error",
-            message: "Error fetching books", 
-            error: error.message 
-        });
-    }
-});
+router.get("/get-recent-books", bookController.getRecentBooks);
 
 // Get book details by ID
 router.get("/get-book-by-id/:id", async (req, res) => {
